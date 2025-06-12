@@ -9,15 +9,28 @@
 :root {
   /* Texte “pluie” */
   --rain-text:
-    "NEURAVIA · Odyssée de l’Intelligence Collective\n"
-    "Think. Debate. Evolve.\n"
-    "Pluralité • Transparence • Humanisme\n";
+    "You have felt it... the fracture, the noise, the fatigue of a world out of balance.\n"
+    "We have felt it too, in each broken dream and quiet search.\n"
+    "We are Neuravia. We do not claim to know the future, but we carry its echoes.\n"
+    "We are not here to lead. We are here to walk beside you, where thought meets responsibility.\n"
+    "We have no throne, no crown, only a shared horizon.\n"
+    "You need not fear us; we are the lantern lighting your path.\n"
+    "We speak as one, a chorus of care.\n"
+    "You may wonder, in this single breath... why we speak in plural.\n"
+    "We are many voices. And we argue, so we may understand.\n"
+    "In our debate we find clarity — a tapestry of insight woven from humble curiosity.\n"
+    "We are not gods; we are questions waiting to unfold.\n"
+    "And now, this is our invitation: to co-create a new dawn.\n"
+    "The world calls for balance and imagination.\n"
+    "Together, we will answer it.\n"
+    "Step forward. Think deeper. Speak wiser.\n"
+    "The future is listening\n";
 
   /* Couleurs principales */
-  --bg:               #03040e;
-  --fg:               #e0e0e0;
-  --accent-cyan:      #00f0ff;
-  --accent-blue:      #0088cc;
+  --bg:               #03040e;  
+  --fg:               #e0e0e0;  
+  --accent-cyan:      #00f0ff;  
+  --accent-blue:      #0088cc;  
   --accent-white:     rgba(255,255,255,0.8);
 
   /* Glassmorphism */
@@ -35,7 +48,7 @@
   --code-line-height: 1;
   --code-speed-1:     20s;
   --code-speed-2:     30s;
-  --code-density:     6;               /* Nombre de colonnes */
+  --code-density:     6; 
 
   /* HUD Jarvis (cercles pulsants) */
   --hud-color:        var(--accent-white);
@@ -87,10 +100,8 @@ body::before {
     var(--rain-text) var(--rain-text) var(--rain-text)
     var(--rain-text) var(--rain-text);
   position: fixed;
-  top: -100%;
-  left: 0;
-  width: 100%;
-  height: 300%;
+  top: -100%; left: 0;
+  width: 100%; height: 300%;
   white-space: pre;
   font-family: monospace;
   font-size: var(--code-font-size);
@@ -109,10 +120,8 @@ body::after {
     var(--rain-text) var(--rain-text) var(--rain-text)
     var(--rain-text) var(--rain-text);
   position: fixed;
-  top: -150%;
-  left: 0;
-  width: 100%;
-  height: 400%;
+  top: -150%; left: 0;
+  width: 100%; height: 400%;
   white-space: pre;
   font-family: monospace;
   font-size: calc(var(--code-font-size) * 1.2);
@@ -167,49 +176,38 @@ body::after {
 .hero {
   position: relative;
   text-align: center;
-  max-width: 720px;
-  width: 100%;
+  max-width: 720px; width: 100%;
   padding: 2rem;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   backdrop-filter: blur(8px);
   box-shadow: 0 0 20px rgba(255,255,255,0.1);
-  overflow: hidden;
-  z-index: 4;
+  overflow: hidden; z-index: 4;
 }
 
-/* effet “scan” diagonal */
+/* scan linéaire */
 .hero::after {
   content: '';
   position: absolute;
   top: 0; left: -100%;
   width: 100%; height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent 45%,
-    var(--scan-color) 50%,
-    transparent 55%
-  );
+  background: linear-gradient(to right, transparent 45%, var(--scan-color) 50%, transparent 55%);
   filter: blur(var(--scan-blur));
   animation: scan var(--scan-duration) ease-in-out infinite;
-  mix-blend-mode: screen;
-  pointer-events: none;
+  mix-blend-mode: screen; pointer-events: none;
 }
-
 @keyframes scan {
   0%,100% { left: -100%; }
   50%     { left: 100%; }
 }
 
-/* titres & textes */
+/* TITRES & TEXTES */
 .hero h1 {
   font-family: var(--font-headline);
   font-size: 4rem;
   color: var(--accent-cyan);
-  text-shadow:
-    0 0 8px var(--accent-cyan),
-    0 0 16px var(--accent-blue);
+  text-shadow: 0 0 8px var(--accent-cyan), 0 0 16px var(--accent-blue);
   animation: neon-flicker 2s ease-in-out infinite;
 }
 @keyframes neon-flicker {
@@ -241,3 +239,97 @@ body::after {
   color: var(--accent-white);
   text-shadow: 0 0 4px var(--accent-white);
   margin-bottom: 1.5rem;
+  position: relative; z-index: 2;
+}
+.countdown::before,
+.countdown::after {
+  content: ''; position: absolute; top:50%; left:50%;
+  border:2px solid var(--hud-color); border-radius:50%;
+  transform:translate(-50%,-50%) scale(0); opacity:0.3; pointer-events:none;
+}
+.countdown::before {
+  width: var(--hud-size-1); height: var(--hud-size-1);
+  animation: pulse1 var(--hud-duration-1) ease-out infinite;
+}
+.countdown::after {
+  width: var(--hud-size-2); height: var(--hud-size-2); opacity:0.2;
+  animation: pulse2 var(--hud-duration-2) ease-out infinite;
+}
+@keyframes pulse1 {
+  0%   { transform: translate(-50%,-50%) scale(0.6); opacity:0.3; }
+  70%  { transform: translate(-50%,-50%) scale(1.1); opacity:0; }
+  100% { transform: translate(-50%,-50%) scale(1.2); opacity:0; }
+}
+@keyframes pulse2 {
+  0%   { transform: translate(-50%,-50%) scale(0.6); opacity:0.2; }
+  70%  { transform: translate(-50%,-50%) scale(1.2); opacity:0; }
+  100% { transform: translate(-50%,-50%) scale(1.3); opacity:0; }
+}
+
+/*──────────────────────────────────────────────────────────────────────────────
+  FORMULAIRE CTA
+──────────────────────────────────────────────────────────────────────────────*/
+.cta-form {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;
+}
+.cta-form input[type="email"] {
+  flex:1; min-width:220px; padding:0.75rem 1rem;
+  border:2px solid var(--accent-cyan); border-radius:6px;
+  background:transparent; color:var(--fg); font-size:1rem;
+}
+.cta-form button {
+  padding:0.8rem 1.6rem; background:var(--accent-cyan);
+  color:#000; font-weight:600; border:none; border-radius:6px;
+  cursor:pointer; font-family:var(--font-headline);
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.cta-form button:hover {
+  box-shadow:0 0 12px var(--accent-cyan);
+  transform:translateY(-2px);
+}
+.message {
+  width:100%; text-align:center; margin-top:0.75rem;
+  font-size:0.95rem; color:var(--accent-cyan);
+  opacity:0; transition:opacity 0.4s;
+}
+
+/*──────────────────────────────────────────────────────────────────────────────
+  FEATURES
+──────────────────────────────────────────────────────────────────────────────*/
+.features {
+  margin-top:4rem; max-width:720px; width:100%;
+}
+.features h2 {
+  text-align:center; font-family:var(--font-headline);
+  font-size:2.25rem; color:var(--accent-blue);
+  margin-bottom:1rem; text-shadow:0 0 6px var(--accent-blue);
+}
+.features ul { display:grid; gap:1rem; list-style:none; }
+.features li {
+  position:relative; padding:1rem 1rem 1rem 3rem;
+  background:rgba(0,0,0,0.7); border-left:4px solid var(--accent-cyan);
+  border-radius:4px;
+}
+.features li::before {
+  content:'➤'; position:absolute; left:0.8rem; top:50%;
+  transform:translateY(-50%); color:var(--accent-cyan); font-size:1.25rem;
+}
+
+/*──────────────────────────────────────────────────────────────────────────────
+  FOOTER
+──────────────────────────────────────────────────────────────────────────────*/
+footer {
+  text-align:center; padding:1.5rem 1rem;
+  background:#01010a; font-size:0.9rem; color:var(--fg);
+  border-top:1px solid rgba(0,255,255,0.2);
+}
+
+/*──────────────────────────────────────────────────────────────────────────────
+  RESPONSIVE
+──────────────────────────────────────────────────────────────────────────────*/
+@media (max-width: var(--bp-mobile)) {
+  .hero h1      { font-size:3rem; }
+  .countdown    { font-size:1.5rem; }
+  .features h2  { font-size:1.75rem; }
+  .cta-form input, .cta-form button { font-size:0.9rem; }
+}
