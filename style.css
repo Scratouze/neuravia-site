@@ -14,10 +14,10 @@
     "Pluralité • Transparence • Humanisme\n";
 
   /* Couleurs principales */
-  --bg:               #03040e;        /* Fond sombre */
-  --fg:               #e0e0e0;        /* Texte clair */
-  --accent-cyan:      #00f0ff;        /* Cyan néon */
-  --accent-blue:      #0088cc;        /* Bleu électrique */
+  --bg:               #03040e;
+  --fg:               #e0e0e0;
+  --accent-cyan:      #00f0ff;
+  --accent-blue:      #0088cc;
   --accent-white:     rgba(255,255,255,0.8);
 
   /* Glassmorphism */
@@ -29,24 +29,24 @@
   --font-headline:    'Orbitron', sans-serif;
 
   /* Pluie de texte (Matrix) */
-  --code-color-1:     rgba(0, 255, 255, 0.08);
-  --code-color-2:     rgba(0, 255, 255, 0.04);
+  --rain-color-1:     rgba(0, 255, 255, 0.15);
+  --rain-color-2:     rgba(0, 255, 255, 0.08);
   --code-font-size:   12px;
   --code-line-height: 1;
-  --code-speed-1:     12s;
-  --code-speed-2:     20s;
+  --code-speed-1:     20s;
+  --code-speed-2:     30s;
   --code-density:     6;               /* Nombre de colonnes */
 
   /* HUD Jarvis (cercles pulsants) */
   --hud-color:        var(--accent-white);
   --hud-size-1:       300px;
   --hud-size-2:       450px;
-  --hud-duration-1:   3s;
-  --hud-duration-2:   4s;
+  --hud-duration-1:   5s;
+  --hud-duration-2:   6s;
 
   /* Scan Jarvis (balayage) */
   --scan-color:       var(--accent-white);
-  --scan-duration:    5s;
+  --scan-duration:    8s;
   --scan-blur:        4px;
 
   /* Breakpoint mobile */
@@ -80,12 +80,12 @@ body {
   z-index: 1;
 }
 
-/* calque rapide – répétition du texte */
+/* CALQUE RAPIDE – DENSE ET VISIBLE */
 body::before {
   content:
-    var(--rain-text)
-    var(--rain-text)
-    var(--rain-text);
+    var(--rain-text) var(--rain-text) var(--rain-text)
+    var(--rain-text) var(--rain-text) var(--rain-text)
+    var(--rain-text) var(--rain-text);
   position: fixed;
   top: -100%;
   left: 0;
@@ -96,18 +96,18 @@ body::before {
   font-size: var(--code-font-size);
   line-height: var(--code-line-height);
   letter-spacing: calc(100% / (var(--code-density) * 1ch));
-  color: var(--code-color-1);
+  color: var(--rain-color-1);
   animation: rain1 var(--code-speed-1) linear infinite;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
 }
 
-/* calque lent – même texte, taille et rythme différents */
+/* CALQUE LENT – PLUS LARGE */
 body::after {
   content:
-    var(--rain-text)
-    var(--rain-text)
-    var(--rain-text);
+    var(--rain-text) var(--rain-text) var(--rain-text)
+    var(--rain-text) var(--rain-text) var(--rain-text)
+    var(--rain-text) var(--rain-text);
   position: fixed;
   top: -150%;
   left: 0;
@@ -118,9 +118,9 @@ body::after {
   font-size: calc(var(--code-font-size) * 1.2);
   line-height: var(--code-line-height);
   letter-spacing: calc(100% / (var(--code-density) * 0.8));
-  color: var(--code-color-2);
+  color: var(--rain-color-2);
   animation: rain2 var(--code-speed-2) linear infinite reverse;
-  z-index: 0;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -141,13 +141,11 @@ body::after {
   width: 100%; height: 100%;
   background-image:
     url("data:image/svg+xml;charset=UTF-8,\
-      <svg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'>\
-        <path d='M30 0l30 15v22l-30 15L0 37V15z' fill='none' stroke='%2300FFFF' stroke-opacity='0.1'/>\
-      </svg>");
+      <svg xmlns='http://www.w3.org/2000/svg' width='60' height='52'><path d='M30 0l30 15v22l-30 15L0 37V15z' fill='none' stroke='%2300FFFF' stroke-opacity='0.1'/></svg>");
   background-repeat: repeat;
   opacity: 0.05;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 /*──────────────────────────────────────────────────────────────────────────────
@@ -160,7 +158,7 @@ body::after {
   align-items: center;
   padding: 3rem 1rem;
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 /*──────────────────────────────────────────────────────────────────────────────
@@ -178,7 +176,7 @@ body::after {
   backdrop-filter: blur(8px);
   box-shadow: 0 0 20px rgba(255,255,255,0.1);
   overflow: hidden;
-  z-index: 1;
+  z-index: 4;
 }
 
 /* effet “scan” diagonal */
@@ -243,145 +241,3 @@ body::after {
   color: var(--accent-white);
   text-shadow: 0 0 4px var(--accent-white);
   margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 2;
-}
-.countdown::before,
-.countdown::after {
-  content: '';
-  position: absolute;
-  top:50%; left:50%;
-  border:2px solid var(--hud-color);
-  border-radius:50%;
-  transform:translate(-50%,-50%) scale(0);
-  opacity:0.3;
-  pointer-events:none;
-}
-.countdown::before {
-  width: var(--hud-size-1);
-  height: var(--hud-size-1);
-  animation: pulse1 var(--hud-duration-1) ease-out infinite;
-}
-.countdown::after {
-  width: var(--hud-size-2);
-  height: var(--hud-size-2);
-  animation: pulse2 var(--hud-duration-2) ease-out infinite;
-  opacity:0.2;
-}
-@keyframes pulse1 {
-  0%   { transform: translate(-50%,-50%) scale(0.6); opacity:0.3; }
-  70%  { transform: translate(-50%,-50%) scale(1.1); opacity:0; }
-  100% { transform: translate(-50%,-50%) scale(1.2); opacity:0; }
-}
-@keyframes pulse2 {
-  0%   { transform: translate(-50%,-50%) scale(0.6); opacity:0.2; }
-  70%  { transform: translate(-50%,-50%) scale(1.2); opacity:0; }
-  100% { transform: translate(-50%,-50%) scale(1.3); opacity:0; }
-}
-
-/*──────────────────────────────────────────────────────────────────────────────
-  FORMULAIRE CTA
-──────────────────────────────────────────────────────────────────────────────*/
-.cta-form {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-}
-.cta-form input[type="email"] {
-  flex: 1;
-  min-width: 220px;
-  padding: 0.75rem 1rem;
-  border: 2px solid var(--accent-cyan);
-  border-radius: 6px;
-  background: transparent;
-  color: var(--fg);
-  font-size: 1rem;
-}
-.cta-form button {
-  padding: 0.8rem 1.6rem;
-  background: var(--accent-cyan);
-  color: #000;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: var(--font-headline);
-  transition: box-shadow 0.2s, transform 0.2s;
-}
-.cta-form button:hover {
-  box-shadow: 0 0 12px var(--accent-cyan);
-  transform: translateY(-2px);
-}
-
-/* Message confirmation */
-.message {
-  width: 100%;
-  text-align: center;
-  margin-top: 0.75rem;
-  font-size: 0.95rem;
-  color: var(--accent-cyan);
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-
-/*──────────────────────────────────────────────────────────────────────────────
-  FEATURES
-──────────────────────────────────────────────────────────────────────────────*/
-.features {
-  margin-top: 4rem;
-  max-width: 720px;
-  width: 100%;
-}
-.features h2 {
-  text-align: center;
-  font-family: var(--font-headline);
-  font-size: 2.25rem;
-  color: var(--accent-blue);
-  margin-bottom: 1rem;
-  text-shadow: 0 0 6px var(--accent-blue);
-}
-.features ul {
-  display: grid;
-  gap: 1rem;
-  list-style: none;
-}
-.features li {
-  position: relative;
-  padding: 1rem 1rem 1rem 3rem;
-  background: rgba(0,0,0,0.7);
-  border-left: 4px solid var(--accent-cyan);
-  border-radius: 4px;
-}
-.features li::before {
-  content: '➤';
-  position: absolute;
-  left: 0.8rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--accent-cyan);
-  font-size: 1.25rem;
-}
-
-/*──────────────────────────────────────────────────────────────────────────────
-  FOOTER
-──────────────────────────────────────────────────────────────────────────────*/
-footer {
-  text-align: center;
-  padding: 1.5rem 1rem;
-  background: #01010a;
-  font-size: 0.9rem;
-  color: var(--fg);
-  border-top: 1px solid rgba(0,255,255,0.2);
-}
-
-/*──────────────────────────────────────────────────────────────────────────────
-  RESPONSIVE
-──────────────────────────────────────────────────────────────────────────────*/
-@media (max-width: var(--bp-mobile)) {
-  .hero h1      { font-size: 3rem; }
-  .countdown    { font-size: 1.5rem; }
-  .features h2  { font-size: 1.75rem; }
-  .cta-form input,
-  .cta-form button { font-size: 0.9rem; }
-}
