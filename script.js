@@ -1,5 +1,5 @@
 // ← Replace these with your actual IDs from EmailJS:
-const SERVICE_ID  = 'service_ov6dhtb';      // Email Services → Service ID
+const SERVICE_ID  = 'service_mn4b4b8';      // Email Services → Service ID
 const TEMPLATE_ID = 'template_inscription'; // Email Templates → Template ID
 
 const form  = document.getElementById('notify-form');
