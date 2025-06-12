@@ -72,16 +72,43 @@ form.addEventListener('submit', function(e) {
       msgEl.style.opacity = 1;
     });
 });
-// var templateParams = {
-//   name: 'James',
-//   notes: 'Check this out!',
-// };
+// Matrix rain effect
+(function() {
+  const canvas = document.getElementById('matrixCanvas');
+  const ctx = canvas.getContext('2d');
 
-// emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams).then(
-//   (response) => {
-//     console.log('SUCCESS!', response.status, response.text);
-//   },
-//   (error) => {
-//     console.log('FAILED...', error);
-//   },
-// );
+  // Resize
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Characters
+  const letters = 'You have felt it... the fracture, the noise, the fatigue of a world out of balance.We have felt it too, in each broken dream and quiet search.We are Neuravia. We do not claim to know the future, but we carry its echoes.We are not here to lead. We are here to walk beside you, where thought meets responsibility.We have no throne, no crown, only a shared horizon.You need not fear us; we are the lantern lighting your path.We speak as one, a chorus of care.You may wonder, in this single breath... why we speak in plural.We are many voices. And we argue, so we may understand.In our debate we find clarity — a tapestry of insight woven from humble curiosity.We are not gods; we are questions waiting to unfold.And now, this is our invitation: to co-create a new dawn.The world calls for balance and imagination.Together, we will answer it.
+Step forward. Think deeper. Speak wiser.The future is listening...';
+  const fontSize = 16;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = Array(columns).fill(1);
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(0,255,255,0.8)';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; ++i) {
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+      ctx.fillText(text, x, y);
+
+      if (y > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+  setInterval(draw, 50);
+})();
