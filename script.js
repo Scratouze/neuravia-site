@@ -1,23 +1,11 @@
-// IDs EmailJS pour la collecte
-const SERVICE_ID     = 'service_mn4b4b8';
-const INSCRIPTION_ID = 'template_inscription';
-
-const form  = document.getElementById('notify-form');
+@@ -5,60 +5,87 @@
+const form  = document.getElementById('notify-form');Add commentMore actions
 const msgEl = document.getElementById('message');
 
-// Géoloc (optionnel), countdown… laissez tel quel
-document.addEventListener('DOMContentLoaded', () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(pos => {
-      const geoField = document.createElement('input');
-      geoField.type  = 'hidden';
-      geoField.name  = 'geo_coords';
-      geoField.value = pos.coords.latitude + ',' + pos.coords.longitude;
-      form.appendChild(geoField);
-    });
-  }
-});
-const target = new Date(2026, 9, 15, 22, 22, 0).getTime();
+
+
+// Countdown target: October 15, 2025 at 22:22 local time
+const target = new Date(2025, 9, 15, 22, 22, 0).getTime();
 const daysEl  = document.getElementById('days');
 const hoursEl = document.getElementById('hours');
 const minsEl  = document.getElementById('minutes');
@@ -43,44 +31,31 @@ function updateCountdown() {
 
 const timer = setInterval(updateCountdown, 1000);
 updateCountdown();
-updateCountdown();
 
-// Soumission du formulaire
-form.addEventListener('submit', async function(e) {
+form.addEventListener('submit', function(e) {
   e.preventDefault();
 
-  // 1) Envoi à votre boîte (EmailJS)
-  try {
-    await emailjs.sendForm(SERVICE_ID, INSCRIPTION_ID, form);
-    msgEl.textContent = "Thanks! You're on the list 😊";
-    msgEl.style.opacity = 1;
-  } catch (err) {
-    console.error('EmailJS error:', err);
-    msgEl.textContent = "Oops, inscription failed…";
-    msgEl.style.opacity = 1;
-    return;
-  }
-
-  // 2) Envoi du mail de confirmation via votre back-end PHP
-  const userEmail = form.elements.from_email.value;
-  try {
-    const res  = await fetch('/send-confirm.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ email: userEmail })
+  emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+    .then(() => {
+      msgEl.textContent = "Thanks! You're on the list 😊";
+      msgEl.style.opacity = 1;
+    })
+    .catch(err => {
+      console.error('EmailJS error:', err);
+      msgEl.textContent = "Oops, sending failed…";
+      msgEl.style.opacity = 1;
     });
-    const json = await res.json();
-    if (json.success) {
-      console.log('✅ Confirmation email sent to user');
-      // Optionnel : afficher un message différent
-      msgEl.textContent = "Confirmation sent to your inbox!";
-    } else {
-      console.error('Backend error:', json.error);
-      msgEl.textContent = "Oops, confirmation failed…";
-    }
-  } catch (err) {
-    console.error('Fetch error:', err);
-    msgEl.textContent = "Network error, try later…";
-  }
-  msgEl.style.opacity = 1;
 });
+// var templateParams = {
+//   name: 'James',
+//   notes: 'Check this out!',
+// };
+
+// emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams).then(
+//   (response) => {
+//     console.log('SUCCESS!', response.status, response.text);
+//   },
+//   (error) => {
+//     console.log('FAILED...', error);
+//   },
+// );
