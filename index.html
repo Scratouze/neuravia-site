@@ -8,23 +8,17 @@
 
   <link rel="stylesheet" href="style.css">
 
-  <!-- 1) Load EmailJS v3.x from jsDelivr (v3.8.0 here) -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/emailjs-com@3.8.0/dist/email.min.js"
-    integrity="sha384-xY1+K+VI5mD2lkOwTq1T0DklfNDfr0LUE8G94qp6oqYwwgM4t9kJgkgcExjXB1xt"
-    crossorigin="anonymous">
-  </script>
 
-  <!-- 2) Initialize EmailJS with your Public Key -->
-  <script>
-    if (typeof emailjs === 'undefined') {
-      console.error('❌ EmailJS SDK failed to load');
-    } else {
-      // ← Replace with YOUR Public Key from Account → API Keys
-      emailjs.init('ldyyoS5ANZnhVw-gZ');
-      console.log('✅ EmailJS initialized (v3.8.0)');
-    }
-  </script>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "ldyyoS5ANZnhVw-gZ",
+      });
+   })();
+</script>
 
   <!-- 3) Your main logic (deferred so it runs after SDK + DOM) -->
   <script defer src="script.js"></script>
