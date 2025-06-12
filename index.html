@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Neuravia – The AI that thinks in multiple voices</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <!-- … meta & CSS … -->
 
-<!-- 1) v4 SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.umd.min.js"></script>
+  <!-- 1) Load EmailJS (emailjs-com) -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@latest/dist/email.min.js"></script>
 
-<!-- 2) init with YOUR Public Key -->
-<script>
-  emailjs.init('ldyyoS5ANZnhVw-gZ');  
-  console.log('✅ EmailJS v4 initialized');
-</script>
+  <!-- 2) Init with your Public Key -->
+  <script>
+    if (typeof emailjs === 'undefined') {
+      console.error('EmailJS SDK failed to load');
+    } else {
+      emailjs.init('ldyyoS5ANZnhVw-gZ');  // your Public Key from Dashboard → API Keys
+      console.log('EmailJS initialized');
+    }
+  </script>
 
-<!-- 3) your logic -->
-<script defer src="script.js"></script>
+  <!-- 3) Your logic -->
+  <script defer src="script.js"></script>
 
 </head>
 <body>
