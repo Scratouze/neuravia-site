@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- … meta & CSS … -->
-  <link rel="stylesheet" href="style.css">
-  <!-- 1) Load EmailJS (emailjs-com) -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@latest/dist/email.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Neuravia – The AI that thinks in multiple voices</title>
+  <meta name="description" content="Neuravia, the cognitive AI that debates, questions and understands. Sign up to be notified at launch.">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- 2) Init with your Public Key -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 1) Load EmailJS v3.x from jsDelivr (v3.8.0 here) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/emailjs-com@3.8.0/dist/email.min.js"
+    integrity="sha384-xY1+K+VI5mD2lkOwTq1T0DklfNDfr0LUE8G94qp6oqYwwgM4t9kJgkgcExjXB1xt"
+    crossorigin="anonymous">
+  </script>
+
+  <!-- 2) Initialize EmailJS with your Public Key -->
   <script>
     if (typeof emailjs === 'undefined') {
-      console.error('EmailJS SDK failed to load');
+      console.error('❌ EmailJS SDK failed to load');
     } else {
-      emailjs.init('ldyyoS5ANZnhVw-gZ');  // your Public Key from Dashboard → API Keys
-      console.log('EmailJS initialized');
+      // ← Replace with YOUR Public Key from Account → API Keys
+      emailjs.init('ldyyoS5ANZnhVw-gZ');
+      console.log('✅ EmailJS initialized (v3.8.0)');
     }
   </script>
 
-  <!-- 3) Your logic -->
+  <!-- 3) Your main logic (deferred so it runs after SDK + DOM) -->
   <script defer src="script.js"></script>
-
 </head>
-<body>
 <body>
   <main class="container">
     <section class="hero">
@@ -36,17 +44,8 @@
       </div>
 
       <form id="notify-form" class="cta-form">
-        <input
-          type="email"
-          name="from_email"
-          placeholder="Your best email"
-          required
-        >
-        <input
-          type="hidden"
-          name="subject"
-          value="🆕 New Neuravia signup"
-        >
+        <input type="email" name="from_email" placeholder="Your best email" required>
+        <input type="hidden" name="subject" value="🆕 New Neuravia signup">
         <button type="submit">Notify me at launch</button>
         <div id="message" class="message"></div>
       </form>
