@@ -1,11 +1,11 @@
 const SERVICE_ID  = 'service_mn4b4b8';      // Email Services → Service ID
 const INSCRIPTION_ID = 'template_inscription'; // Email Templates → Template ID
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('notify-form');
-  const params = new URLSearchParams(location.search);
+const form = document.getElementById('notify-form');
 const msgEl = document.getElementById('message');
+document.addEventListener('DOMContentLoaded', () => {
+
+  const params = new URLSearchParams(location.search);
+
   // form.elements.page_url.value     = location.href;
   // form.elements.user_agent.value   = navigator.userAgent;
   // form.elements.language.value     = navigator.language;
