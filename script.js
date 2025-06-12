@@ -64,26 +64,28 @@ updateCountdown();
 
 form.addEventListener('submit', function(e) {
   e.preventDefault();
+  const userEmail = form.elements.from_email.value;
+  const ts        = new Date().toISOString();
 
-  const formEl = this;
-  const userEmail = formEl.elements.from_email.value;
-  const ts = new Date().toISOString();
-
-  // 1er envoi
-  emailjs.sendForm(SERVICE_ID, INSCRIPTION_ID, formEl)
+  // 1) Envoi à votre box
+  emailjs.sendForm(SERVICE_ID, INSCRIPTION_ID, form)
     .then(() => {
       msgEl.textContent = "Thanks! You're on the list 😊";
       msgEl.style.opacity = 1;
 
-      // 2e envoi personnalisé
-      return emailjs.send(SERVICE_ID, RESPONSE_ID, {
-        to_email:   userEmail,
-        timestamp:  ts,
-        // transmettez ici tous les autres champs dont votre template a besoin…
-      });
+      // 2) Envoi de la confirmation au user
+      return emailjs.send(
+        SERVICE_ID,
+        RESPONSE_ID,
+        {
+          to_email:  userEmail,
+          timestamp: ts,
+          // ajoutez ici toutes les autres variables utilisées dans votre template
+        }
+      );
     })
     .then(() => {
-      // message de succès optionnel
+      console.log('Confirmation email sent to user');
     })
     .catch(err => {
       console.error('EmailJS error:', err);
