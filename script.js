@@ -70,12 +70,12 @@ form.addEventListener('submit', function(e) {
       msgEl.textContent = "Thanks! You're on the list 😊";
   emailjs.sendForm(SERVICE_ID, RESPONSE_ID, this)
     .then(() => {
-      msgEl.textContent = "Thanks! You're on the list 😊";
-      msgEl.style.opacity = 1;
+      // msgEl.textContent = "Thanks! You're on the list 😊";
+      // msgEl.style.opacity = 1;
     })
     .catch(err => {
       console.error('EmailJS error:', err);
-      msgEl.textContent = "Oops, sending failed…";
+      // msgEl.textContent = "Oops, sending failed…";
       msgEl.style.opacity = 1;
     });
       msgEl.style.opacity = 1;
