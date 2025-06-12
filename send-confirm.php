@@ -18,7 +18,7 @@ Hello,
 
 Thank you for joining Neuravia! We’re thrilled to have you on board as one of our pioneers.
 
-Launch Date: October 15, 2025 at 22:22
+Launch Date: October 15, 2026 at 22:22
 
 Stay tuned for exclusive previews!
 
