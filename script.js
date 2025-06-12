@@ -66,7 +66,7 @@ form.addEventListener('submit', function(e) {
   e.preventDefault();
 
   const formEl = this;
-  const userEmail = formEl.elements.email.value;
+  const userEmail = formEl.elements.from_email.value;
   const ts = new Date().toISOString();
 
   // 1er envoi
