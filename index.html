@@ -5,7 +5,18 @@
   <title>Neuravia – L’IA qui pense à plusieurs voix</title>
   <meta name="description" content="Neuravia, l'intelligence cognitive qui débat, questionne et comprend. Inscris-toi pour être averti du lancement.">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <link rel="stylesheet" href="style.css">
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
+  <script>
+    (function(){
+      // ← REMPLACEZ par votre User ID EmailJS (ex : 'user_abcd1234')
+      emailjs.init('VOTRE_USER_ID');
+    })();
+  </script>
+
   <script defer src="script.js"></script>
 </head>
 <body>
@@ -14,14 +25,26 @@
       <h1>Neuravia</h1>
       <p class="tagline">L’IA qui pense à plusieurs voix</p>
       <p class="mystery">Quel sera le prochain grand pas de l'IA ?</p>
+
       <div id="countdown" class="countdown">
         <span id="days">00</span>d :
         <span id="hours">00</span>h :
         <span id="minutes">00</span>m :
         <span id="seconds">00</span>s
       </div>
-      <form id="notify-form" action="https://formspree.io/f/XXXXXXXX" method="POST" class="cta-form">
-        <input type="email" name="email" placeholder="Ton meilleur email" required>
+
+      <form id="notify-form" class="cta-form">
+        <input
+          type="email"
+          name="from_email"
+          placeholder="Ton meilleur email"
+          required
+        >
+        <input
+          type="hidden"
+          name="subject"
+          value="🆕 Nouvelle inscription Neuravia"
+        >
         <button type="submit">Prévenir à l’heure H</button>
         <div id="message" class="message"></div>
       </form>
@@ -30,9 +53,9 @@
     <section class="features">
       <h2>Pourquoi Neuravia ?</h2>
       <ul>
-        <li><strong>Pluralité</strong> – des points de vue complémentaires pour une intelligence plus riche.</li>
-        <li><strong>Nuance</strong> – pas de réponses binaires, mais une délibération humaine.</li>
-        <li><strong>Éthique</strong> – au cœur du processus, garanti sans dérive.</li>
+        <li><strong>Pluralité</strong> – points de vue complémentaires.</li>
+        <li><strong>Nuance</strong> – pas de réponses binaires.</li>
+        <li><strong>Éthique</strong> – intégrité garantie.</li>
       </ul>
     </section>
   </main>
