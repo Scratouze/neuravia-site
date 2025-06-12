@@ -7,44 +7,49 @@
   VARIABLES GLOBALES (PERSONNALISABLES)
 ──────────────────────────────────────────────────────────────────────────────*/
 :root {
+  /* Texte “pluie” */
+  --rain-text:
+    "NEURAVIA · Odyssée de l’Intelligence Collective\n"
+    "Think. Debate. Evolve.\n"
+    "Pluralité • Transparence • Humanisme\n";
+
   /* Couleurs principales */
-  --bg:               #000000;        /* Fond absolu */
+  --bg:               #03040e;        /* Fond sombre */
   --fg:               #e0e0e0;        /* Texte clair */
-  --accent-matrix:    #00ff88;        /* Vert néon Matrix */
-  --accent-cyan:      #00e0ff;        /* Cyan futuriste */
-  --accent-jarvis:    #FF6B00;        /* Orange Jarvis HUD */
-  --muted:            #555555;        /* Texte secondaire */
+  --accent-cyan:      #00f0ff;        /* Cyan néon */
+  --accent-blue:      #0088cc;        /* Bleu électrique */
+  --accent-white:     rgba(255,255,255,0.8);
 
   /* Glassmorphism */
   --glass-bg:         rgba(0, 0, 0, 0.4);
-  --glass-border:     rgba(0, 255, 136, 0.3);
+  --glass-border:     rgba(0, 255, 255, 0.3);
 
   /* Typographie */
   --font-primary:     'Montserrat', sans-serif;
   --font-headline:    'Orbitron', sans-serif;
 
-  /* Pluie de code (Matrix) */
-  --code-color-1:     rgba(0, 255, 136, 0.08);
-  --code-color-2:     rgba(0, 255, 136, 0.04);
+  /* Pluie de texte (Matrix) */
+  --code-color-1:     rgba(0, 255, 255, 0.08);
+  --code-color-2:     rgba(0, 255, 255, 0.04);
   --code-font-size:   12px;
   --code-line-height: 1;
   --code-speed-1:     12s;
   --code-speed-2:     20s;
-  --code-density:     6;               /* Nombre de colonnes (0/1) */
+  --code-density:     6;               /* Nombre de colonnes */
 
   /* HUD Jarvis (cercles pulsants) */
-  --hud-color:        var(--accent-jarvis);
+  --hud-color:        var(--accent-white);
   --hud-size-1:       300px;
   --hud-size-2:       450px;
   --hud-duration-1:   3s;
   --hud-duration-2:   4s;
 
   /* Scan Jarvis (balayage) */
-  --scan-color:       var(--accent-jarvis);
+  --scan-color:       var(--accent-white);
   --scan-duration:    5s;
   --scan-blur:        4px;
 
-  /* Responsive breakpoints */
+  /* Breakpoint mobile */
   --bp-mobile:        600px;
 }
 
@@ -61,7 +66,7 @@ html, body {
 }
 
 /*──────────────────────────────────────────────────────────────────────────────
-  BODY + PLUIE DE CODE
+  BODY + PLUIE DE TEXTE + GRILLE HEXAGONALE
 ──────────────────────────────────────────────────────────────────────────────*/
 body {
   position: relative;
@@ -72,16 +77,15 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-primary);
-  z-index: 1; /* Le contenu au-dessus du fond animé */
+  z-index: 1;
 }
 
-/* Calque rapide / dense */
+/* calque rapide – répétition du texte */
 body::before {
   content:
-    "010101\n101010\n001101\n110011\n"
-    "011001\n100110\n111000\n000111\n"
-    "010101\n101010\n001101\n110011\n"
-    "011001\n100110\n111000\n000111\n";
+    var(--rain-text)
+    var(--rain-text)
+    var(--rain-text);
   position: fixed;
   top: -100%;
   left: 0;
@@ -98,13 +102,12 @@ body::before {
   pointer-events: none;
 }
 
-/* Calque lent / large */
+/* calque lent – même texte, taille et rythme différents */
 body::after {
   content:
-    "111000\n000111\n110011\n001100\n"
-    "101010\n010101\n111000\n000111\n"
-    "110011\n001100\n101010\n010101\n"
-    "111000\n000111\n110011\n001100\n";
+    var(--rain-text)
+    var(--rain-text)
+    var(--rain-text);
   position: fixed;
   top: -150%;
   left: 0;
@@ -121,7 +124,6 @@ body::after {
   pointer-events: none;
 }
 
-/* Animations pluie */
 @keyframes rain1 {
   from { transform: translateY(0); }
   to   { transform: translateY(100%); }
@@ -129,6 +131,23 @@ body::after {
 @keyframes rain2 {
   from { transform: translateY(0); }
   to   { transform: translateY(100%); }
+}
+
+/* grille hexagonale UI */
+.container::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image:
+    url("data:image/svg+xml;charset=UTF-8,\
+      <svg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'>\
+        <path d='M30 0l30 15v22l-30 15L0 37V15z' fill='none' stroke='%2300FFFF' stroke-opacity='0.1'/>\
+      </svg>");
+  background-repeat: repeat;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /*──────────────────────────────────────────────────────────────────────────────
@@ -157,12 +176,12 @@ body::after {
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   backdrop-filter: blur(8px);
-  box-shadow: 0 0 20px rgba(255, 107, 0, 0.1);
+  box-shadow: 0 0 20px rgba(255,255,255,0.1);
   overflow: hidden;
   z-index: 1;
 }
 
-/* Balayage linéaire façon Jarvis */
+/* effet “scan” diagonal */
 .hero::after {
   content: '';
   position: absolute;
@@ -170,9 +189,9 @@ body::after {
   width: 100%; height: 100%;
   background: linear-gradient(
     to right,
-    transparent 0%,
+    transparent 45%,
     var(--scan-color) 50%,
-    transparent 100%
+    transparent 55%
   );
   filter: blur(var(--scan-blur));
   animation: scan var(--scan-duration) ease-in-out infinite;
@@ -180,56 +199,63 @@ body::after {
   pointer-events: none;
 }
 
-/* Titres et textes */
+@keyframes scan {
+  0%,100% { left: -100%; }
+  50%     { left: 100%; }
+}
+
+/* titres & textes */
 .hero h1 {
   font-family: var(--font-headline);
   font-size: 4rem;
-  color: var(--accent-jarvis);
-  text-shadow: 0 0 12px var(--accent-jarvis);
+  color: var(--accent-cyan);
+  text-shadow:
+    0 0 8px var(--accent-cyan),
+    0 0 16px var(--accent-blue);
+  animation: neon-flicker 2s ease-in-out infinite;
+}
+@keyframes neon-flicker {
+  0%,100% { opacity:1; }
+  50%     { opacity:0.8; }
+  51%     { opacity:0.95; }
+  52%     { opacity:0.85; }
 }
 .hero .tagline {
   font-family: var(--font-primary);
   font-size: 1.5rem;
   margin: 0.5rem 0;
-  color: var(--accent-cyan);
+  color: var(--accent-white);
 }
 .hero .mystery {
   font-style: italic;
-  color: var(--muted);
+  color: var(--accent-white);
+  opacity: 0.7;
   margin-bottom: 1.5rem;
 }
 
-/* Animation scan */
-@keyframes scan {
-  0%, 100% { left: -100%; }
-  50%       { left: 100%; }
-}
-
 /*──────────────────────────────────────────────────────────────────────────────
-  COUNTDOWN + CERCLAGE HUD JARVIS
+  COUNTDOWN + HUD PULSANT
 ──────────────────────────────────────────────────────────────────────────────*/
 .countdown {
   font-family: var(--font-headline);
   font-size: 2rem;
   letter-spacing: 0.1em;
-  color: var(--accent-cyan);
-  text-shadow: 0 0 4px var(--accent-cyan);
+  color: var(--accent-white);
+  text-shadow: 0 0 4px var(--accent-white);
   margin-bottom: 1.5rem;
   position: relative;
   z-index: 2;
 }
-
-/* Cercles pulsants */
 .countdown::before,
 .countdown::after {
   content: '';
   position: absolute;
-  top: 50%; left: 50%;
-  border: 2px solid var(--hud-color);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0.3;
-  pointer-events: none;
+  top:50%; left:50%;
+  border:2px solid var(--hud-color);
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(0);
+  opacity:0.3;
+  pointer-events:none;
 }
 .countdown::before {
   width: var(--hud-size-1);
@@ -240,18 +266,17 @@ body::after {
   width: var(--hud-size-2);
   height: var(--hud-size-2);
   animation: pulse2 var(--hud-duration-2) ease-out infinite;
-  opacity: 0.2;
+  opacity:0.2;
 }
-
 @keyframes pulse1 {
-  0%   { transform: translate(-50%,-50%) scale(0.6); opacity: 0.3; }
-  70%  { transform: translate(-50%,-50%) scale(1.1); opacity: 0;   }
-  100% { transform: translate(-50%,-50%) scale(1.2); opacity: 0;   }
+  0%   { transform: translate(-50%,-50%) scale(0.6); opacity:0.3; }
+  70%  { transform: translate(-50%,-50%) scale(1.1); opacity:0; }
+  100% { transform: translate(-50%,-50%) scale(1.2); opacity:0; }
 }
 @keyframes pulse2 {
-  0%   { transform: translate(-50%,-50%) scale(0.6); opacity: 0.2; }
-  70%  { transform: translate(-50%,-50%) scale(1.2); opacity: 0;   }
-  100% { transform: translate(-50%,-50%) scale(1.3); opacity: 0;   }
+  0%   { transform: translate(-50%,-50%) scale(0.6); opacity:0.2; }
+  70%  { transform: translate(-50%,-50%) scale(1.2); opacity:0; }
+  100% { transform: translate(-50%,-50%) scale(1.3); opacity:0; }
 }
 
 /*──────────────────────────────────────────────────────────────────────────────
@@ -267,7 +292,7 @@ body::after {
   flex: 1;
   min-width: 220px;
   padding: 0.75rem 1rem;
-  border: 2px solid var(--accent-matrix);
+  border: 2px solid var(--accent-cyan);
   border-radius: 6px;
   background: transparent;
   color: var(--fg);
@@ -275,7 +300,7 @@ body::after {
 }
 .cta-form button {
   padding: 0.8rem 1.6rem;
-  background: var(--accent-matrix);
+  background: var(--accent-cyan);
   color: #000;
   font-weight: 600;
   border: none;
@@ -285,17 +310,17 @@ body::after {
   transition: box-shadow 0.2s, transform 0.2s;
 }
 .cta-form button:hover {
-  box-shadow: 0 0 12px var(--accent-matrix);
+  box-shadow: 0 0 12px var(--accent-cyan);
   transform: translateY(-2px);
 }
 
-/* Message de confirmation */
+/* Message confirmation */
 .message {
   width: 100%;
   text-align: center;
   margin-top: 0.75rem;
   font-size: 0.95rem;
-  color: var(--accent-matrix);
+  color: var(--accent-cyan);
   opacity: 0;
   transition: opacity 0.4s;
 }
@@ -312,9 +337,9 @@ body::after {
   text-align: center;
   font-family: var(--font-headline);
   font-size: 2.25rem;
-  color: var(--accent-cyan);
+  color: var(--accent-blue);
   margin-bottom: 1rem;
-  text-shadow: 0 0 6px var(--accent-cyan);
+  text-shadow: 0 0 6px var(--accent-blue);
 }
 .features ul {
   display: grid;
@@ -325,7 +350,7 @@ body::after {
   position: relative;
   padding: 1rem 1rem 1rem 3rem;
   background: rgba(0,0,0,0.7);
-  border-left: 4px solid var(--accent-matrix);
+  border-left: 4px solid var(--accent-cyan);
   border-radius: 4px;
 }
 .features li::before {
@@ -334,7 +359,7 @@ body::after {
   left: 0.8rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--accent-matrix);
+  color: var(--accent-cyan);
   font-size: 1.25rem;
 }
 
@@ -346,17 +371,17 @@ footer {
   padding: 1.5rem 1rem;
   background: #01010a;
   font-size: 0.9rem;
-  color: var(--muted);
-  border-top: 1px solid var(--muted);
+  color: var(--fg);
+  border-top: 1px solid rgba(0,255,255,0.2);
 }
 
 /*──────────────────────────────────────────────────────────────────────────────
-  RÉACTIVITÉ / RESPONSIVE
+  RESPONSIVE
 ──────────────────────────────────────────────────────────────────────────────*/
 @media (max-width: var(--bp-mobile)) {
-  .hero h1    { font-size: 3rem; }
-  .countdown  { font-size: 1.5rem; }
-  .features h2{ font-size: 1.75rem; }
+  .hero h1      { font-size: 3rem; }
+  .countdown    { font-size: 1.5rem; }
+  .features h2  { font-size: 1.75rem; }
   .cta-form input,
   .cta-form button { font-size: 0.9rem; }
 }
