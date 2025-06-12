@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <title>Neuravia – The AI that thinks in multiple voices</title>
-  <meta name="description" content="Neuravia, the cognitive AI that debates, questions and understands. Sign up to be notified at launch.">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-
   <link rel="stylesheet" href="style.css">
 
-  <!-- 1) EmailJS SDK (must load first) -->
+  <!-- 1) Load EmailJS SDK -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
-  <!-- 2) Initialize EmailJS with your User ID -->
+  <!-- 2) Initialize AFTER it’s loaded -->
   <script>
-    (function(){
-      // ← Replace with your actual EmailJS User ID
+    if (typeof emailjs === 'undefined') {
+      console.error('EmailJS SDK failed to load');
+    } else {
       emailjs.init('YOUR_USER_ID');
-    })();
+      console.log('EmailJS initialized');
+    }
   </script>
 
-  <!-- 3) Your main script, deferred so it runs after the SDK and DOM are ready -->
+  <!-- 3) Defer your own logic until after SDK + DOM -->
   <script defer src="script.js"></script>
 </head>
+<body>
 <body>
   <main class="container">
     <section class="hero">
