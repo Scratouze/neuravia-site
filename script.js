@@ -36,17 +36,19 @@ function updateCountdown() {
 const timer = setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Send form via EmailJS
+
+
 form.addEventListener('submit', function(e) {
   e.preventDefault();
+
   emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
     .then(() => {
       msgEl.textContent = "Thanks! You're on the list 😊";
       msgEl.style.opacity = 1;
-    }, (err) => {
-      console.error('EmailJS error:', err);
+    })
+    .catch(err => {
+      console.error('EmailJS ❌', err);
       msgEl.textContent = "Oops, sending failed…";
       msgEl.style.opacity = 1;
     });
 });
-
