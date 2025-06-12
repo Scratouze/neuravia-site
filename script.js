@@ -33,17 +33,32 @@ function updateCountdown() {
 const timer = setInterval(updateCountdown, 1000);
 updateCountdown();
 
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
+// form.addEventListener('submit', function(e) {
+//   e.preventDefault();
 
-  emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
-    .then(() => {
-      msgEl.textContent = "Thanks! You're on the list 😊";
-      msgEl.style.opacity = 1;
-    })
-    .catch(err => {
-      console.error('EmailJS error:', err);
-      msgEl.textContent = "Oops, sending failed…";
-      msgEl.style.opacity = 1;
-    });
-});
+//   emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+//     .then(() => {
+//       msgEl.textContent = "Thanks! You're on the list 😊";
+//       msgEl.style.opacity = 1;
+//     })
+//     .catch(err => {
+//       console.error('EmailJS error:', err);
+//       msgEl.textContent = "Oops, sending failed…";
+//       msgEl.style.opacity = 1;
+//     });
+// });
+var templateParams = {
+  name: 'James',
+  notes: 'Check this out!',
+};
+
+emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams).then(
+  (response) => {
+    console.log('SUCCESS!', response.status, response.text);
+  },
+  (error) => {
+    console.log('FAILED...', error);
+  },
+);
+
+
