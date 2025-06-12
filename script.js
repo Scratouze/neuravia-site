@@ -5,6 +5,33 @@ const TEMPLATE_ID = 'template_inscription'; // Email Templates → Template ID
 const form  = document.getElementById('notify-form');
 const msgEl = document.getElementById('message');
 
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('notify-form');
+  const params = new URLSearchParams(location.search);
+
+  form.elements.page_url.value     = location.href;
+  form.elements.user_agent.value   = navigator.userAgent;
+  form.elements.language.value     = navigator.language;
+  form.elements.time_zone.value    = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  form.elements.screen_res.value   = screen.width + '×' + screen.height;
+  form.elements.referrer.value     = document.referrer;
+  form.elements.utm_source.value   = params.get('utm_source') || '';
+  form.elements.utm_medium.value   = params.get('utm_medium') || '';
+  form.elements.utm_campaign.value = params.get('utm_campaign') || '';
+  form.elements.timestamp.value    = new Date().toISOString();
+
+  // Optionnel : géolocalisation (demande de permission)
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      const geoField = document.createElement('input');
+      geoField.type  = 'hidden';
+      geoField.name  = 'geo_coords';
+      geoField.value = pos.coords.latitude + ',' + pos.coords.longitude;
+      form.appendChild(geoField);
+    });
+  }
+});
+
 // Countdown target: October 15, 2025 at 22:22 local time
 const target = new Date(2025, 9, 15, 22, 22, 0).getTime();
 const daysEl  = document.getElementById('days');
