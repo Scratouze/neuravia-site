@@ -1,6 +1,8 @@
 // ← Replace these with your actual IDs from EmailJS:
 const SERVICE_ID  = 'service_mn4b4b8';      // Email Services → Service ID
-const TEMPLATE_ID = 'template_inscription'; // Email Templates → Template ID
+const INSCRIPTION_ID = 'template_inscription'; // Email Templates → Template ID
+const RESPONSE_ID = 'template_response'; // Email Templates → Template ID
+
 
 const form  = document.getElementById('notify-form');
 const msgEl = document.getElementById('message');
@@ -63,10 +65,21 @@ updateCountdown();
 form.addEventListener('submit', function(e) {
   e.preventDefault();
   this.timestamp   = new Date().toISOString();
-  emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+  emailjs.sendForm(SERVICE_ID, INSCRIPTION_ID, this)
+    .then(() => {
+      msgEl.textContent = "Thanks! You're on the list 😊";
+  emailjs.sendForm(SERVICE_ID, RESPONSE_ID, this)
     .then(() => {
       msgEl.textContent = "Thanks! You're on the list 😊";
       msgEl.style.opacity = 1;
+    })
+    .catch(err => {
+      console.error('EmailJS error:', err);
+      msgEl.textContent = "Oops, sending failed…";
+      msgEl.style.opacity = 1;
+    });
+      msgEl.style.opacity = 1;
+
     })
     .catch(err => {
       console.error('EmailJS error:', err);
