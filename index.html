@@ -8,15 +8,18 @@
 
   <link rel="stylesheet" href="style.css">
 
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
+  <!-- 1) EmailJS SDK (must load first) -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+  <!-- 2) Initialize EmailJS with your User ID -->
   <script>
     (function(){
-      // ← REPLACE with your EmailJS User ID, e.g. 'user_abcd1234'
+      // ← Replace with your actual EmailJS User ID
       emailjs.init('YOUR_USER_ID');
     })();
   </script>
 
+  <!-- 3) Your main script, deferred so it runs after the SDK and DOM are ready -->
   <script defer src="script.js"></script>
 </head>
 <body>
