@@ -9,16 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('notify-form');
   const params = new URLSearchParams(location.search);
 
-  form.elements.page_url.value     = location.href;
-  form.elements.user_agent.value   = navigator.userAgent;
-  form.elements.language.value     = navigator.language;
-  form.elements.time_zone.value    = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  form.elements.screen_res.value   = screen.width + '×' + screen.height;
-  form.elements.referrer.value     = document.referrer;
-  form.elements.utm_source.value   = params.get('utm_source') || '';
-  form.elements.utm_medium.value   = params.get('utm_medium') || '';
-  form.elements.utm_campaign.value = params.get('utm_campaign') || '';
-  form.elements.timestamp.value    = new Date().toISOString();
+  // form.elements.page_url.value     = location.href;
+  // form.elements.user_agent.value   = navigator.userAgent;
+  // form.elements.language.value     = navigator.language;
+  // form.elements.time_zone.value    = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  // form.elements.screen_res.value   = screen.width + '×' + screen.height;
+  // form.elements.referrer.value     = document.referrer;
+  // form.elements.utm_source.value   = params.get('utm_source') || '';
+  // form.elements.utm_medium.value   = params.get('utm_medium') || '';
+  // form.elements.utm_campaign.value = params.get('utm_campaign') || '';
+  // form.elements.timestamp.value    = new Date().toISOString();
 
   // Optionnel : géolocalisation (demande de permission)
   if (navigator.geolocation) {
@@ -62,7 +62,7 @@ updateCountdown();
 
 form.addEventListener('submit', function(e) {
   e.preventDefault();
-
+  this.timestamp   = new Date().toISOString();
   emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
     .then(() => {
       msgEl.textContent = "Thanks! You're on the list 😊";
