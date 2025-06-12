@@ -1,14 +1,11 @@
 const SERVICE_ID  = 'service_mn4b4b8';      // Email Services → Service ID
 const INSCRIPTION_ID = 'template_inscription'; // Email Templates → Template ID
-const RESPONSE_ID = 'template_response'; // Email Templates → Template ID
 
 
-const form  = document.getElementById('notify-form');Add commentMore actions
-const msgEl = document.getElementById('message');
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('notify-form');
   const params = new URLSearchParams(location.search);
-
+const msgEl = document.getElementById('message');
   // form.elements.page_url.value     = location.href;
   // form.elements.user_agent.value   = navigator.userAgent;
   // form.elements.language.value     = navigator.language;
@@ -64,7 +61,7 @@ updateCountdown();
 form.addEventListener('submit', function(e) {
   e.preventDefault();
 
-  emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
+  emailjs.sendForm(SERVICE_ID, INSCRIPTION_ID, this)
     .then(() => {
       msgEl.textContent = "Thanks! You're on the list 😊";
       msgEl.style.opacity = 1;
