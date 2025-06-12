@@ -6,7 +6,7 @@ const form   = document.getElementById('notify-form');
 const msgEl  = document.getElementById('message');
 
 // Configuration du compte à rebours (date ISO)
-const target = new Date(2025, 9, 15, 22, 22, 0, 0).getTime();
+const target = new Date(2025, 10, 15, 0, 0, 0, 0).getTime();
 const daysEl    = document.getElementById('days');
 const hoursEl   = document.getElementById('hours');
 const minsEl    = document.getElementById('minutes');
