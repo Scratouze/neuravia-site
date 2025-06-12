@@ -1,57 +1,87 @@
-/* Import des polices */
+/*──────────────────────────────────────────────────────────────────────────────
+  IMPORTS
+──────────────────────────────────────────────────────────────────────────────*/
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
 
-/* Variables globales */
+/*──────────────────────────────────────────────────────────────────────────────
+  VARIABLES GLOBALES (PERSONNALISABLES)
+──────────────────────────────────────────────────────────────────────────────*/
 :root {
-  --bg: #000000;           /* Noir absolu */
-  --fg: #e0e0e0;           /* Texte clair */
-  --accent: #00ff88;       /* Vert néon Matrix */
-  --accent2: #00e0ff;      /* Cyan futuriste */
-  --muted: #555555;        /* Gris sombre */
-  --glass-bg: rgba(0, 0, 0, 0.4);
-  --glass-border: rgba(0, 255, 136, 0.3);
-  --font-primary: 'Montserrat', sans-serif;
-  --font-headline: 'Orbitron', sans-serif;
+  /* Couleurs principales */
+  --bg:               #000000;        /* Fond absolu */
+  --fg:               #e0e0e0;        /* Texte clair */
+  --accent-matrix:    #00ff88;        /* Vert néon Matrix */
+  --accent-cyan:      #00e0ff;        /* Cyan futuriste */
+  --accent-jarvis:    #FF6B00;        /* Orange Jarvis HUD */
+  --muted:            #555555;        /* Texte secondaire */
 
-  /* Réglages pluie de code */
-  --code-color: rgba(0, 255, 136, 0.08);
-  --code-color-2: rgba(0, 255, 136, 0.04);
-  --code-font-size: 12px;
+  /* Glassmorphism */
+  --glass-bg:         rgba(0, 0, 0, 0.4);
+  --glass-border:     rgba(0, 255, 136, 0.3);
+
+  /* Typographie */
+  --font-primary:     'Montserrat', sans-serif;
+  --font-headline:    'Orbitron', sans-serif;
+
+  /* Pluie de code (Matrix) */
+  --code-color-1:     rgba(0, 255, 136, 0.08);
+  --code-color-2:     rgba(0, 255, 136, 0.04);
+  --code-font-size:   12px;
   --code-line-height: 1;
-  --code-speed-1: 12s;
-  --code-speed-2: 20s;
-  --code-density: 6;
+  --code-speed-1:     12s;
+  --code-speed-2:     20s;
+  --code-density:     6;               /* Nombre de colonnes (0/1) */
+
+  /* HUD Jarvis (cercles pulsants) */
+  --hud-color:        var(--accent-jarvis);
+  --hud-size-1:       300px;
+  --hud-size-2:       450px;
+  --hud-duration-1:   3s;
+  --hud-duration-2:   4s;
+
+  /* Scan Jarvis (balayage) */
+  --scan-color:       var(--accent-jarvis);
+  --scan-duration:    5s;
+  --scan-blur:        4px;
+
+  /* Responsive breakpoints */
+  --bp-mobile:        600px;
 }
 
-/* Reset & boîte */
+/*──────────────────────────────────────────────────────────────────────────────
+  RESET
+──────────────────────────────────────────────────────────────────────────────*/
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+html, body {
+  height: 100%;
+}
+
+/*──────────────────────────────────────────────────────────────────────────────
+  BODY + PLUIE DE CODE
+──────────────────────────────────────────────────────────────────────────────*/
 body {
-  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-primary);
-  overflow-x: hidden;
-  position: relative;
-  z-index: 1; /* pour que le contenu passe au-dessus des calques */
+  z-index: 1; /* Le contenu au-dessus du fond animé */
 }
 
-/* Pluie de code animée – calque rapide et dense */
+/* Calque rapide / dense */
 body::before {
   content:
     "010101\n101010\n001101\n110011\n"
     "011001\n100110\n111000\n000111\n"
     "010101\n101010\n001101\n110011\n"
-    "011001\n100110\n111000\n000111\n"
-    "010101\n101010\n001101\n110011\n"
-    "011001\n100110\n111000\n000111\n"
-    "010101\n101010\n001101\n110011\n"
-    "011001\n100110\n111000\n000111";
+    "011001\n100110\n111000\n000111\n";
   position: fixed;
   top: -100%;
   left: 0;
@@ -62,24 +92,19 @@ body::before {
   font-size: var(--code-font-size);
   line-height: var(--code-line-height);
   letter-spacing: calc(100% / (var(--code-density) * 1ch));
-  color: var(--code-color);
-  transform: translateZ(0);
+  color: var(--code-color-1);
   animation: rain1 var(--code-speed-1) linear infinite;
   z-index: 0;
   pointer-events: none;
 }
 
-/* Pluie de code animée – calque plus lent et plus large */
+/* Calque lent / large */
 body::after {
   content:
     "111000\n000111\n110011\n001100\n"
     "101010\n010101\n111000\n000111\n"
     "110011\n001100\n101010\n010101\n"
-    "111000\n000111\n110011\n001100\n"
-    "101010\n010101\n111000\n000111\n"
-    "110011\n001100\n101010\n010101\n"
-    "111000\n000111\n110011\n001100\n"
-    "101010\n010101\n111000\n000111";
+    "111000\n000111\n110011\n001100\n";
   position: fixed;
   top: -150%;
   left: 0;
@@ -91,23 +116,24 @@ body::after {
   line-height: var(--code-line-height);
   letter-spacing: calc(100% / (var(--code-density) * 0.8));
   color: var(--code-color-2);
-  transform: translateZ(0);
   animation: rain2 var(--code-speed-2) linear infinite reverse;
   z-index: 0;
   pointer-events: none;
 }
 
-/* Keyframes */
+/* Animations pluie */
 @keyframes rain1 {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(100%); }
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
 }
 @keyframes rain2 {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(100%); }
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
 }
 
-/* Conteneur principal */
+/*──────────────────────────────────────────────────────────────────────────────
+  CONTENEUR PRINCIPAL
+──────────────────────────────────────────────────────────────────────────────*/
 .container {
   flex: 1;
   display: flex;
@@ -118,29 +144,54 @@ body::after {
   z-index: 1;
 }
 
-/* Hero Section */
+/*──────────────────────────────────────────────────────────────────────────────
+  HERO SECTION + SCAN JARVIS
+──────────────────────────────────────────────────────────────────────────────*/
 .hero {
+  position: relative;
   text-align: center;
   max-width: 720px;
   width: 100%;
   padding: 2rem;
-  backdrop-filter: blur(8px);
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,255,136,0.1);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.1);
+  overflow: hidden;
+  z-index: 1;
 }
+
+/* Balayage linéaire façon Jarvis */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--scan-color) 50%,
+    transparent 100%
+  );
+  filter: blur(var(--scan-blur));
+  animation: scan var(--scan-duration) ease-in-out infinite;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Titres et textes */
 .hero h1 {
   font-family: var(--font-headline);
   font-size: 4rem;
-  color: var(--accent);
-  text-shadow: 0 0 8px var(--accent);
+  color: var(--accent-jarvis);
+  text-shadow: 0 0 12px var(--accent-jarvis);
 }
 .hero .tagline {
   font-family: var(--font-primary);
   font-size: 1.5rem;
   margin: 0.5rem 0;
-  color: var(--accent2);
+  color: var(--accent-cyan);
 }
 .hero .mystery {
   font-style: italic;
@@ -148,17 +199,64 @@ body::after {
   margin-bottom: 1.5rem;
 }
 
-/* Countdown */
+/* Animation scan */
+@keyframes scan {
+  0%, 100% { left: -100%; }
+  50%       { left: 100%; }
+}
+
+/*──────────────────────────────────────────────────────────────────────────────
+  COUNTDOWN + CERCLAGE HUD JARVIS
+──────────────────────────────────────────────────────────────────────────────*/
 .countdown {
   font-family: var(--font-headline);
   font-size: 2rem;
   letter-spacing: 0.1em;
-  color: var(--accent2);
-  text-shadow: 0 0 4px var(--accent2);
+  color: var(--accent-cyan);
+  text-shadow: 0 0 4px var(--accent-cyan);
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
 }
 
-/* Formulaire CTA */
+/* Cercles pulsants */
+.countdown::before,
+.countdown::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  border: 2px solid var(--hud-color);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.countdown::before {
+  width: var(--hud-size-1);
+  height: var(--hud-size-1);
+  animation: pulse1 var(--hud-duration-1) ease-out infinite;
+}
+.countdown::after {
+  width: var(--hud-size-2);
+  height: var(--hud-size-2);
+  animation: pulse2 var(--hud-duration-2) ease-out infinite;
+  opacity: 0.2;
+}
+
+@keyframes pulse1 {
+  0%   { transform: translate(-50%,-50%) scale(0.6); opacity: 0.3; }
+  70%  { transform: translate(-50%,-50%) scale(1.1); opacity: 0;   }
+  100% { transform: translate(-50%,-50%) scale(1.2); opacity: 0;   }
+}
+@keyframes pulse2 {
+  0%   { transform: translate(-50%,-50%) scale(0.6); opacity: 0.2; }
+  70%  { transform: translate(-50%,-50%) scale(1.2); opacity: 0;   }
+  100% { transform: translate(-50%,-50%) scale(1.3); opacity: 0;   }
+}
+
+/*──────────────────────────────────────────────────────────────────────────────
+  FORMULAIRE CTA
+──────────────────────────────────────────────────────────────────────────────*/
 .cta-form {
   display: flex;
   flex-wrap: wrap;
@@ -169,7 +267,7 @@ body::after {
   flex: 1;
   min-width: 220px;
   padding: 0.75rem 1rem;
-  border: 2px solid var(--accent);
+  border: 2px solid var(--accent-matrix);
   border-radius: 6px;
   background: transparent;
   color: var(--fg);
@@ -177,7 +275,7 @@ body::after {
 }
 .cta-form button {
   padding: 0.8rem 1.6rem;
-  background: var(--accent);
+  background: var(--accent-matrix);
   color: #000;
   font-weight: 600;
   border: none;
@@ -187,7 +285,7 @@ body::after {
   transition: box-shadow 0.2s, transform 0.2s;
 }
 .cta-form button:hover {
-  box-shadow: 0 0 12px var(--accent);
+  box-shadow: 0 0 12px var(--accent-matrix);
   transform: translateY(-2px);
 }
 
@@ -197,12 +295,14 @@ body::after {
   text-align: center;
   margin-top: 0.75rem;
   font-size: 0.95rem;
-  color: var(--accent);
+  color: var(--accent-matrix);
   opacity: 0;
   transition: opacity 0.4s;
 }
 
-/* Features Section */
+/*──────────────────────────────────────────────────────────────────────────────
+  FEATURES
+──────────────────────────────────────────────────────────────────────────────*/
 .features {
   margin-top: 4rem;
   max-width: 720px;
@@ -212,9 +312,9 @@ body::after {
   text-align: center;
   font-family: var(--font-headline);
   font-size: 2.25rem;
-  color: var(--accent2);
+  color: var(--accent-cyan);
   margin-bottom: 1rem;
-  text-shadow: 0 0 6px var(--accent2);
+  text-shadow: 0 0 6px var(--accent-cyan);
 }
 .features ul {
   display: grid;
@@ -225,7 +325,7 @@ body::after {
   position: relative;
   padding: 1rem 1rem 1rem 3rem;
   background: rgba(0,0,0,0.7);
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid var(--accent-matrix);
   border-radius: 4px;
 }
 .features li::before {
@@ -234,11 +334,13 @@ body::after {
   left: 0.8rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--accent);
+  color: var(--accent-matrix);
   font-size: 1.25rem;
 }
 
-/* Footer */
+/*──────────────────────────────────────────────────────────────────────────────
+  FOOTER
+──────────────────────────────────────────────────────────────────────────────*/
 footer {
   text-align: center;
   padding: 1.5rem 1rem;
@@ -248,9 +350,13 @@ footer {
   border-top: 1px solid var(--muted);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .hero h1 { font-size: 3rem; }
-  .countdown { font-size: 1.5rem; }
-  .features h2 { font-size: 1.75rem; }
+/*──────────────────────────────────────────────────────────────────────────────
+  RÉACTIVITÉ / RESPONSIVE
+──────────────────────────────────────────────────────────────────────────────*/
+@media (max-width: var(--bp-mobile)) {
+  .hero h1    { font-size: 3rem; }
+  .countdown  { font-size: 1.5rem; }
+  .features h2{ font-size: 1.75rem; }
+  .cta-form input,
+  .cta-form button { font-size: 0.9rem; }
 }
