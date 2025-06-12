@@ -6,23 +6,18 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="style.css">
 
-  <!-- 1) Load EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com/dist/email.min.js" integrity="sha256-mfQ/oUYbDJUWYuuRW/Sk3P21KQsTlM0GgZBvmWDhcpE=" crossorigin="anonymous"></script>
+<!-- 1) v4 SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.umd.min.js"></script>
 
+<!-- 2) init with YOUR Public Key -->
+<script>
+  emailjs.init('ldyyoS5ANZnhVw-gZ');  
+  console.log('✅ EmailJS v4 initialized');
+</script>
 
-  <!-- 2) Initialize AFTER it’s loaded -->
-  <script>
-    if (typeof emailjs === 'undefined') {
-      console.error('EmailJS SDK failed to load');
-    } else {
-    // ← Use your Public Key from Account → API Keys
-      emailjs.init('ldyyoS5ANZnhVw-gZ');
-      console.log('EmailJS initialized');
-    }
-  </script>
+<!-- 3) your logic -->
+<script defer src="script.js"></script>
 
-  <!-- 3) Defer your own logic until after SDK + DOM -->
-  <script defer src="script.js"></script>
 </head>
 <body>
 <body>
