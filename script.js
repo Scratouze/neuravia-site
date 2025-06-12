@@ -2,11 +2,14 @@
 const SERVICE_ID  = 'service_ovh_neuravia';
 const TEMPLATE_ID = 'template_inscription';
 
+
+
 const form   = document.getElementById('notify-form');
 const msgEl  = document.getElementById('message');
 
-// Configuration du compte à rebours (date ISO)
-const target = new Date(2025, 10, 15, 0, 0, 0, 0).getTime();
+// Countdown target: October 15, 2025 at 22:22 local time
+const target = new Date(2025, 9, 15, 22, 22, 0, 0).getTime();
+
 const daysEl    = document.getElementById('days');
 const hoursEl   = document.getElementById('hours');
 const minsEl    = document.getElementById('minutes');
@@ -17,7 +20,7 @@ function updateCountdown() {
   let diff   = target - now;
   if (diff < 0) {
     clearInterval(timer);
-    document.querySelector('.countdown').textContent = 'C’est parti !';
+    document.querySelector('.countdown').textContent = 'Launch time!';
     return;
   }
   const d = Math.floor(diff / 86400000); diff %= 86400000;
@@ -29,19 +32,22 @@ function updateCountdown() {
   minsEl .textContent = String(m).padStart(2,'0');
   secsEl .textContent = String(s).padStart(2,'0');
 }
+
 const timer = setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Envoi via EmailJS
+// Send form via EmailJS
 form.addEventListener('submit', function(e) {
   e.preventDefault();
   emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
     .then(() => {
-      msgEl.textContent = "Merci ! Tu es sur la liste 😊";
+      msgEl.textContent = "Thanks! You're on the list 😊";
       msgEl.style.opacity = 1;
     }, (err) => {
       console.error('EmailJS error:', err);
-      msgEl.textContent = "Erreur d'envoi, réessaye plus tard.";
+      msgEl.textContent = "Oops, sending failed…";
       msgEl.style.opacity = 1;
     });
+});
+
 });
