@@ -1,11 +1,14 @@
+
+
+
 // → Remplacez par vos propres IDs EmailJS
 const SERVICE_ID  = 'service_ovh_neuravia';
 const TEMPLATE_ID = 'template_inscription';
 
 
 
-const form   = document.getElementById('notify-form');
-const msgEl  = document.getElementById('message');
+const form  = document.getElementById('notify-form');
+const msgEl = document.getElementById('message');
 
 // Countdown target: October 15, 2025 at 22:22 local time
 const target = new Date(2025, 9, 15, 22, 22, 0, 0).getTime();
@@ -37,18 +40,16 @@ const timer = setInterval(updateCountdown, 1000);
 updateCountdown();
 
 
-
 form.addEventListener('submit', function(e) {
   e.preventDefault();
-
   emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this)
     .then(() => {
-      msgEl.textContent = "Thanks! You're on the list 😊";
+      msgEl.textContent = "Thanks! You’re on the list 😊";
       msgEl.style.opacity = 1;
     })
     .catch(err => {
-      console.error('EmailJS ❌', err);
-      msgEl.textContent = "Oops, sending failed…";
+      console.error('EmailJS error:', err);
+      msgEl.textContent = "Oops, could not send…";
       msgEl.style.opacity = 1;
     });
 });
