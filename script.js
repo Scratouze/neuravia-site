@@ -64,22 +64,26 @@ updateCountdown();
 
 form.addEventListener('submit', function(e) {
   e.preventDefault();
-  this.timestamp   = new Date().toISOString();
-  emailjs.sendForm(SERVICE_ID, INSCRIPTION_ID, this)
+
+  const formEl = this;
+  const userEmail = formEl.elements.email.value;
+  const ts = new Date().toISOString();
+
+  // 1er envoi
+  emailjs.sendForm(SERVICE_ID, INSCRIPTION_ID, formEl)
     .then(() => {
       msgEl.textContent = "Thanks! You're on the list 😊";
-  emailjs.sendForm(SERVICE_ID, RESPONSE_ID, this)
-    .then(() => {
-      // msgEl.textContent = "Thanks! You're on the list 😊";
-      // msgEl.style.opacity = 1;
-    })
-    .catch(err => {
-      console.error('EmailJS error:', err);
-      // msgEl.textContent = "Oops, sending failed…";
-      msgEl.style.opacity = 1;
-    });
       msgEl.style.opacity = 1;
 
+      // 2e envoi personnalisé
+      return emailjs.send(SERVICE_ID, RESPONSE_ID, {
+        to_email:   userEmail,
+        timestamp:  ts,
+        // transmettez ici tous les autres champs dont votre template a besoin…
+      });
+    })
+    .then(() => {
+      // message de succès optionnel
     })
     .catch(err => {
       console.error('EmailJS error:', err);
@@ -87,6 +91,7 @@ form.addEventListener('submit', function(e) {
       msgEl.style.opacity = 1;
     });
 });
+
 // var templateParams = {
 //   name: 'James',
 //   notes: 'Check this out!',
