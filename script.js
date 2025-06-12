@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Countdown target: October 15, 2025 at 22:22 local time
-const target = new Date(2025, 9, 15, 22, 22, 0).getTime();
+const target = new Date(2026, 9, 15, 22, 22, 0).getTime();
 const daysEl  = document.getElementById('days');
 const hoursEl = document.getElementById('hours');
 const minsEl  = document.getElementById('minutes');
